@@ -18,7 +18,7 @@ import * as z from "zod";
 import { useState, useTransition } from "react";
 import { register } from "@/server/actions/register";
 import { useToast } from "@/hooks/use-toast";
-import { Col } from "../ui/flex";
+import { Col } from "../flex";
 
 type RegisterFormData = z.infer<typeof RegisterSchema>;
 

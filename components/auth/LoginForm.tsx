@@ -20,7 +20,7 @@ import { login } from "@/server/actions/login";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { LoadingSpinner } from "@/components/FormLoading";
-import { Col } from "../ui/flex";
+import { Col } from "../flex";
 import { useToast } from "@/hooks/use-toast";
 import { LoaderCircle } from "lucide-react";
 

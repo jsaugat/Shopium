@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ReduxProvider } from "@/store/provider";
+import { CreateNewStoreModal } from "@/components/modals/CreateNewStoreModal";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,8 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-geist`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
-        {/* {children} */}
+        <ReduxProvider>
+          {/* 'Create New Store' modal */}
+          <CreateNewStoreModal />
+          {children}
+        </ReduxProvider>
         <Toaster />
       </body>
     </html>

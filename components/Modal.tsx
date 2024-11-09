@@ -3,11 +3,15 @@
 import { ReactNode, useEffect, useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "@/store/slices/modalSlice";
+import { RootState } from "@/store/store";
 
 interface ModalProps {
   title: string;
@@ -24,29 +28,25 @@ export const Modal = ({
   handleModalClose,
   children,
 }: ModalProps) => {
-  // Local state to control dialog visibility
-  const [isModalOpen, setIsModalOpen] = useState(isOpen);
-
-  // Sync local state with the `isOpen` prop
-  useEffect(() => {
-    setIsModalOpen(isOpen);
-  }, [isOpen]);
+  const isModalOpen = useSelector((state: RootState) => state.modal.isOpen);
+  const dispatch = useDispatch();
 
   // Close modal handler
-  const closeHandler = () => {
-    setIsModalOpen(false);
+  const handleClose = () => {
+    dispatch(closeModal());
     handleModalClose();
   };
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={closeHandler}>
-      <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-[425px]" onClose={handleClose}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div className="">{children}</div>
       </DialogContent>
+      <DialogClose />
     </Dialog>
   );
 };

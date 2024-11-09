@@ -1,20 +1,27 @@
 "use client";
 
+import { StoreModal } from "@/components/modals/CreateNewStoreModal";
 import { Button } from "@/components/ui/button";
-import { open, close } from "@/store/slices/modalSlice";
+import { openModal, closeModal } from "@/store/slices/modalSlice";
 import { RootState } from "@/store/store";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
-  const modal = useSelector((state: RootState) => state.modal.isOpen);
+  const isModalOpen = useSelector((state: RootState) => state.modal.isOpen);
   const dispatch = useDispatch();
-  console.log({ modal });
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      dispatch(openModal());
+    }
+  }, [isModalOpen, openModal]);
+
   return (
     <div className="font-sans">
-      Hello page
-      <div>{JSON.stringify(modal)}</div>
-      <Button onClick={() => dispatch(open())}>Create Store</Button>
-      <Button onClick={() => dispatch(close())}>Close Store</Button>
+      <div>Is the modal open? : {isModalOpen ? "Yes" : "No"}</div>
+      <Button onClick={() => dispatch(openModal())}>Create Store</Button>
+      <Button onClick={() => dispatch(closeModal())}>Close Store</Button>
     </div>
   );
 }

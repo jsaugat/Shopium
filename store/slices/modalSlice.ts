@@ -17,15 +17,15 @@ const modalSlice = createSlice({
     // doesn't actually mutate the state because it uses the Immer library,
     // which detects changes to a "draft state" and produces a brand new
     // immutable state based off those changes
-    open: (state) => {
+    openModal: (state) => {
       state.isOpen = true;
     },
-    close: (state) => {
+    closeModal: (state) => {
       state.isOpen = false;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { open, close } = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;
 export default modalSlice.reducer;
