@@ -20,6 +20,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Row } from "../flex";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const NewStoreSchema = z.object({
   name: z.string().min(1),
@@ -37,8 +39,24 @@ export const CreateNewStoreModal = () => {
     },
   });
 
-  const onSubmit = (data: NewStoreSchemaType) => {
-    console.log(data);
+  const onSubmit = async (newStoreData: NewStoreSchemaType) => {
+    try {
+      // Send a POST request to the store API route
+      const { data } = await axios.post("/api/stores", newStoreData);
+      toast.success("Store created successfully");
+      console.log({ data });
+      /**
+       * NOTE:
+       * AXIOS will throw an error if the response status is not in 2XX range,
+       * we don't have to check for the status code here.
+       */
+    } catch (error) {
+      toast.error("An error occurred while creating the store");
+      console.error({
+        message: "Axios fetch error!",
+        error,
+      });
+    }
   };
 
   return (

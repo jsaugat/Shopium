@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Toasterr } from "react-hot-toast";
 import { ReduxProvider } from "@/store/provider";
 import { CreateNewStoreModal } from "@/components/modals/CreateNewStoreModal";
 
@@ -31,12 +32,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-geist`}
       >
+        <Toaster />
+        <Toasterr />
         <ReduxProvider>
           {/* 'Create New Store' modal */}
-          <CreateNewStoreModal />
+          {/* <CreateNewStoreModal /> */}
           {children}
         </ReduxProvider>
-        <Toaster />
       </body>
     </html>
   );

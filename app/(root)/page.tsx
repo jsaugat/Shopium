@@ -1,6 +1,5 @@
 "use client";
 
-import { StoreModal } from "@/components/modals/CreateNewStoreModal";
 import { Button } from "@/components/ui/button";
 import { openModal, closeModal } from "@/store/slices/modalSlice";
 import { RootState } from "@/store/store";
@@ -20,8 +19,6 @@ export default function Home() {
   return (
     <div className="font-sans">
       <div>Is the modal open? : {isModalOpen ? "Yes" : "No"}</div>
-      <Button onClick={() => dispatch(openModal())}>Create Store</Button>
-      <Button onClick={() => dispatch(closeModal())}>Close Store</Button>
     </div>
   );
 }
