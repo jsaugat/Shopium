@@ -13,8 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LoginSchema } from "@/schemas";
-import * as z from "zod";
+import { LoginSchema } from "@/zod-schemas";
+import { z } from "zod";
 import { useState, useTransition } from "react";
 import { login } from "@/server/actions/login";
 import { useSearchParams } from "next/navigation";

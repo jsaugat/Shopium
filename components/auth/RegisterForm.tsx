@@ -13,8 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { RegisterSchema } from "@/schemas";
-import * as z from "zod";
+import { RegisterSchema } from "@/zod-schemas";
+import { z } from "zod";
 import { useState, useTransition } from "react";
 import { register } from "@/server/actions/register";
 import { useToast } from "@/hooks/use-toast";
