@@ -1,15 +1,34 @@
 "use server"
 
-import { LoginSchema } from "@/schemas"
-import { z } from "zod"
+import { LoginSchema } from "@/zod-schemas";
+import { z } from "zod";
+import { getUserByEmail } from "../db/queries/user";
+import bcrypt from "bcrypt";
 
 export const login = async (credentials: z.infer<typeof LoginSchema>) => {
   // SERVER-SIDE VALIDATION
-  const validation = LoginSchema.safeParse(credentials);
-  if (!validation.success) {
+  const parsedCredentials = LoginSchema.safeParse(credentials);
+  if (!parsedCredentials.success) {
     return {
       success: false,
       message: "Invalid credentials!",
+    }
+  }
+
+  const { email, password } = parsedCredentials.data;
+  const existingUser = await getUserByEmail(email);
+  if (!existingUser) {
+    return {
+      success: false,
+      message: "User not found!"
+    }
+  }
+
+  const isPasswordCorrect = bcrypt.compare(password, existingUser.password)
+  if (!isPasswordCorrect) {
+    return {
+      success: false,
+      message: "Invalid password!"
     }
   }
 
