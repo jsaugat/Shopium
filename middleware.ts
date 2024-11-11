@@ -1,7 +1,21 @@
-// export { auth as middleware } from "@/auth"
-
-import { auth, BASE_PATH } from "@/auth";
+import { auth as middleware, LOGIN_PATH } from "@/auth";
 import { NextResponse } from "next/server";
+
+// Middleware that checks if a request is authenticated.
+export default middleware((req) => {
+  // console.log({ req })
+  const pathname = req.nextUrl.pathname;
+  const origin = req.nextUrl.origin;
+
+  //! In unauthenticated request if 'req.nextUrl.pathname' is not LOGIN_PATH, redirect to LOGIN_PATH
+  if (!req.auth && pathname !== LOGIN_PATH && pathname !== "/") {
+    const loginUrl = new URL(
+      `${LOGIN_PATH}/?callbackUrl=${encodeURIComponent(pathname)}`
+      , origin
+    )
+    return NextResponse.redirect(loginUrl)
+  }
+})
 
 export const config = {
   matcher: [
@@ -14,18 +28,3 @@ export const config = {
     '/(api|trpc)(.*)',
   ],
 };
-
-export default auth(
-  request => {
-    const reqUrl = new URL(request.url);
-
-    // If not authenticated and not at home route, redirect to the login page.
-    if (!request.auth && reqUrl.pathname !== "/") {
-      const PUBLIC_REDIRECT_PATH = new URL(
-        `${BASE_PATH}/signin?callback=${encodeURIComponent(reqUrl.pathname)}`,
-        request.url
-      )
-      return NextResponse.redirect(PUBLIC_REDIRECT_PATH)
-    }
-  }
-)
