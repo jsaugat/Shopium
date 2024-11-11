@@ -18,8 +18,6 @@ import { z } from "zod";
 import { useState, useTransition } from "react";
 import { login } from "@/server/actions/login";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { LoadingSpinner } from "@/components/FormLoading";
 import { Col } from "../flex";
 import { useToast } from "@/hooks/use-toast";
 import { LoaderCircle } from "lucide-react";
@@ -32,6 +30,8 @@ export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+
+  const callbackUrl = useSearchParams().get("callbackUrl") || "/"; // Get the callbackURL from the query parameters
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
@@ -47,7 +47,7 @@ export const LoginForm = () => {
     setSuccess(undefined);
     startTransition(() => {
       // Call the login server action
-      login(credentials).then((res) => {
+      login(credentials, callbackUrl).then((res) => {
         // form.reset();
         if (res.success) {
           setSuccess(res.message);
