@@ -8,13 +8,13 @@ import { useSearchParams } from "next/navigation";
 
 export const Social = () => {
   const searchParams = useSearchParams();
-  const callbackURL = searchParams.get("callbackURL");
+  const callbackUrl = searchParams.get("callbackUrl");
 
-  const handleClick = async (provider: "google" | "github") => {
+  const handleClick = async (provider: "google") => {
     // use the signIn function to sign in with a specific provider
     // callbackUrl sets the post-authentication redirect destination for users signing in via social providers.
     await signIn(provider, {
-      callbackUrl: callbackURL || DEFAULT_LOGIN_REDIRECT,
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   };
   return (

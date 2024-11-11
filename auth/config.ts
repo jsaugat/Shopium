@@ -15,12 +15,6 @@ import { User, NextAuthConfig } from "next-auth"
 import { getUserByEmail } from '../server/db/queries/user';
 import Credentials from "next-auth/providers/credentials"
 import { LoginSchema } from "@/zod-schemas"
-// Your own logic for dealing with plaintext password strings; be careful!
-
-import bcrypt from 'bcrypt'
-
-console.log({ 'Google Client ID': process.env.AUTH_GOOGLE_ID });
-console.log({ 'Github Client ID': process.env.AUTH_GITHUB_ID });
 
 export default {
   providers: [
@@ -30,8 +24,8 @@ export default {
       name: "Credentials",
       credentials: {
         // The key is the name of the input field. The value is the label that will be displayed on the default Authjs sign-in form.
-        email: { label: "Email", type: "text", placeholder: "mail@jsaugat.tech" },
-        password: { label: "Password", type: "password", placeholder: "******" }
+        email: {},
+        password: {}
       },
       authorize: async (credentials): Promise<User | null> => {
         // Validate credentials

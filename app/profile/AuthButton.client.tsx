@@ -15,7 +15,6 @@ export default function AuthButtonClient() {
         <Button
           onClick={async () => {
             await signOut();
-            await signIn();
           }}
         >
           Sign out

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { openModal, closeModal } from "@/store/slices/modalSlice";
 import { RootState } from "@/store/store";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,6 +20,9 @@ export default function Home() {
   return (
     <div className="font-sans">
       <div>Is the modal open? : {isModalOpen ? "Yes" : "No"}</div>
+      <Button asChild>
+        <Link href="/auth/login">Login</Link>
+      </Button>
     </div>
   );
 }
