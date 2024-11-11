@@ -4,7 +4,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Toasterr } from "react-hot-toast";
 import { ReduxProvider } from "@/store/provider";
-import { CreateNewStoreModal } from "@/components/modals/CreateNewStoreModal";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,23 +23,26 @@ export const metadata: Metadata = {
   description: "Capstone Project",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-geist`}
       >
-        <Toaster />
-        <Toasterr />
-        <ReduxProvider>
-          {/* 'Create New Store' modal */}
-          {/* <CreateNewStoreModal /> */}
-          {children}
-        </ReduxProvider>
+        <SessionProvider session={session}>
+          <ReduxProvider>
+            <Toaster />
+            <Toasterr />
+            {/* <CreateNewStoreModal /> */}
+            {children}
+          </ReduxProvider>
+        </SessionProvider>
       </body>
     </html>
   );
